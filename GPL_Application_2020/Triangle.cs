@@ -7,7 +7,7 @@ using System. Drawing;
 
 namespace GPL_Application_2020
 {
-   public  class Triangle : IShape;
+   public  class Triangle : IShape
     {
         private float wid;
         private float hght;
@@ -47,12 +47,7 @@ namespace GPL_Application_2020
                 pnt[2].Y = Convert.ToInt32(y - hght);
 
                 g.DrawPolygon(myPen, pnt);
-                /*
-                Pen drawingPen = new Pen(Brushes.Black, 5);
-                g.DrawLine(drawingPen, new Point(0, 50), new Point(50, 0));
-                g.DrawLine(drawingPen, new Point(50, 0), new Point(50, 100));
-                g.DrawLine(drawingPen, new Point(50, 100), new Point(0, 50)
-            
+               
             
             
             }

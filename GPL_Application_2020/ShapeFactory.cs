@@ -6,26 +6,28 @@ using System.Threading.Tasks;
 
 namespace GPL_Application_2020
 {
-    public class ShapeFactory;
-    public IShape Getshape(string ShapeType)
+    public class ShapeFactory
     {
-        if (ShapeType == null)
+        public IShape Getshape(string ShapeType)
         {
+            if (ShapeType == null)
+            {
+                return null;
+            }
+            if (ShapeType == ("Circle").ToLower())
+            {
+                return new Circle();
+            }
+            if (ShapeType == ("Rectangle").ToLower())
+            {
+                return new Rectangle();
+            }
+            if (ShapeType == ("Triangle").ToLower())
+            {
+                return new Triangle();
+            }
             return null;
         }
-        if (ShapeType == ("Circle").ToLower())
-        {
-            return new Circle();
-        }
-        if (ShapeType == ("Rectangle").ToLower())
-        {
-            return new Rectangle();
-        }
-        if (ShapeType == ("Triangle").ToLower())
-        {
-            return new Triangle();
-        }
-        return null;
     }
 }
 
@@ -48,7 +50,7 @@ namespace GPL_Application_2020
 
 
 
-}
+
 
 
 

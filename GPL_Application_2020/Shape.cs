@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GPL_Application_2020
 {
-    public interface Shape
+    public interface IShape
     {
         void Draw(Graphics g, int x, int y);
         void GetValue(float width, float height, float hypotenus, float radius);

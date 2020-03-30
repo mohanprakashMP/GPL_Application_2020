@@ -25,7 +25,7 @@ namespace GPL_Application_2020
             textcmd = Regex.Replace(textcmd, @"\s+", " ");
             string[] words = textcmd.Split(' ');
             //removing white spaces in between words
-            for (int i = 0; i < words.Length; i++)
+            for (int i = 0; i < words.Length; i++) 
             {
                 words[i] = words[i].Trim();
             }

@@ -13,7 +13,9 @@ namespace GPL_Application_2020
         private float hght;
         public void GetValue(float width, float height, float hypotenus, float radius)
         {
-            public void Draw(Graphics g, int x, int y);
+        }
+         
+        public void Draw(Graphics g, int x, int y)
             {
 
                 //SolidBrush sb = new SolidBrush(Color.Red);
@@ -27,5 +29,5 @@ namespace GPL_Application_2020
 
     }
 
-}
+
 

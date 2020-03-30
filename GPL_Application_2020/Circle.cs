@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GPL_Application_2020
 {
-    public class Circle:Shape
+    public class Circle:IShape
     {
         private float rad;
         public void GetValue(float width, float height, float hypotenus, float radius)
