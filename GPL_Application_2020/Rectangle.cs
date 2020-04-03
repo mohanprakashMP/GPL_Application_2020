@@ -13,6 +13,8 @@ namespace GPL_Application_2020
         private float hght;
         public void GetValue(float width, float height, float hypotenus, float radius)
         {
+            wid = width;
+            hght = height;
         }
          
         public void Draw(Graphics g, int x, int y)

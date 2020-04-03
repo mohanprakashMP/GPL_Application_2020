@@ -53,7 +53,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(408, 377);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "circle 80";
             // 
             // contextMenuStrip1
             // 
@@ -149,8 +148,9 @@
             // oPENToolStripMenuItem
             // 
             this.oPENToolStripMenuItem.Name = "oPENToolStripMenuItem";
-            this.oPENToolStripMenuItem.Size = new System.Drawing.Size(130, 26);
+            this.oPENToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.oPENToolStripMenuItem.Text = "OPEN";
+            this.oPENToolStripMenuItem.Click += new System.EventHandler(this.oPENToolStripMenuItem_Click);
             // 
             // panel1
             // 

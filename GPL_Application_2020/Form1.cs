@@ -137,6 +137,12 @@ namespace GPL_Application_2020
             textBox2.Text = "";
             panel1.Refresh();
         }
+
+        private void oPENToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HelpSection hs = new HelpSection();
+            hs.Show();
+        }
     }
 }
 
