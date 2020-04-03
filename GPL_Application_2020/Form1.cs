@@ -13,20 +13,16 @@ namespace GPL_Application_2020
 {
     public partial class Form1 : Form
     {
+        Graphics g;
+
         public Form1()
         {
             InitializeComponent();
+            g =panel1.CreateGraphics();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
+      
+       
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -87,6 +83,60 @@ namespace GPL_Application_2020
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            if (textBox1.Text != null && !textBox1.Text.Equals(""))
+            {
+                CommandValidations cmdval = new CommandValidations(textBox1);
+            if (!cmdval.IsSomethingInvalid)
+            {
+                try
+                {
+                    string comm = textBox1.Text;
+                    Command c = new Command();
+                    c.Commandline(comm, g);
+                    c.Shapecommand(comm, g);
+                }
+                catch (Exception exc)
+                {
+                    textBox2.Text += "\r\n" + exc.ToString();
+                }
+            }
+            else if (!cmdval.IsSyntaxValid)
+            {
+                textBox2.Text += "\r\nCommand Syntax Error.";
+            }
+            else if (!cmdval.IsParameterValid)
+            {
+                textBox2.Text += "\r\nParamter Error.";
+            }
+            else
+            {
+                textBox2.Text += "\r\nSomething went wrong, try again.";
+
+            }
+        }
+            else
+            {
+                textBox2.Text += ("CommandField Must not be Empty");
+            }
+}
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            panel1.Refresh();
+            g.ResetTransform();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            panel1.Refresh();
+        }
     }
 }
 

@@ -9,7 +9,7 @@ namespace GPL_Application_2020
 {
     public class Rectangle : IShape
     {
-        private float wid;
+        private float wid;    
         private float hght;
         public void GetValue(float width, float height, float hypotenus, float radius)
         {
