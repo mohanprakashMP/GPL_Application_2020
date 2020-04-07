@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +7,10 @@ using System.Drawing;
 
 namespace GPL_Application_2020
 {
+
+    /// <summary>
+    /// major class
+    /// </summary>
     public interface IShape
     {
         void Draw(Graphics g, int x, int y);

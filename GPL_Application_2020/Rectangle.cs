@@ -7,6 +7,10 @@ using System.Drawing;
 
 namespace GPL_Application_2020
 {
+
+    /// <summary>
+    /// //rectangle class
+    /// </summary>
     public class Rectangle : IShape
     {
         private float wid;    
@@ -17,6 +21,13 @@ namespace GPL_Application_2020
             hght = height;
         }
          
+
+        /// <summary>
+        /// draw function
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public void Draw(Graphics g, int x, int y)
             {
 

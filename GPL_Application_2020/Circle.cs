@@ -7,6 +7,10 @@ using System.Drawing;
 
 namespace GPL_Application_2020
 {
+
+    /// <summary>
+    /// circle class
+    /// </summary>
     public class Circle:IShape
     {
         private float rad;
@@ -14,6 +18,13 @@ namespace GPL_Application_2020
         {
             rad = radius;
         }
+
+        /// <summary>
+        /// draw function
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public void Draw(Graphics g, int x, int y)
         {
             //SolidBrush sb = new SolidBrush(Color.Black);

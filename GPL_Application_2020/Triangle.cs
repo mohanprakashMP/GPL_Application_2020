@@ -7,6 +7,10 @@ using System. Drawing;
 
 namespace GPL_Application_2020
 {
+
+    /// <summary>
+    /// triangle class
+    /// </summary>
    public  class Triangle : IShape
     {
         private float wid;
@@ -21,6 +25,11 @@ namespace GPL_Application_2020
             hypt = hypotenus;
 
         }
+
+        /// <summary>
+        /// triangle validation
+        /// </summary>
+        /// <returns></returns>
         public Boolean checkTriangleValidity()
         {
             // check condition 
@@ -30,6 +39,13 @@ namespace GPL_Application_2020
                 return true;
 
         }
+
+        /// <summary>
+        /// draw function
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public void Draw(Graphics g, int x, int y)
         {
             if (checkTriangleValidity())
