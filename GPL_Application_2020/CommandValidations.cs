@@ -86,13 +86,20 @@ namespace GPL_Application_2020
                     }
 
                 }
+
+                CheckCmdLoopAndIfValidation();
+                if (!IsCmdValid)
+                {
+                    isSomethingInvalid = true;
+                }
+
             }
         }
         public void CheckCmdLineValidation(string cmd)
         {
-            String[] syntaxs = { "drawto", "moveto", "run" };
+            String[] syntaxs = { "drawto", "moveto", "run","clear","reset","loop","endloop","if","endif" };
             String[] shapes = { "circle", "rectangle", "triangle" };
-            String[] variables = { "radius", "width", "height", "hypotenuse" };
+            String[] variables = { "radius", "width", "height", "hypotenuse","counter" };
             cmd = Regex.Replace(cmd, @"\s+", " ");
             string[] commandsAfterSpliting = cmd.Split(' ');
             for (int i = 0; i < commandsAfterSpliting.Length; i++)
@@ -126,7 +133,66 @@ namespace GPL_Application_2020
                         IsCmdValid = false;
                     }
                 }
-                else if (firstWord.Equals("run"))
+
+                 else if (firstWord.Equals("clear") || firstWord.Equals("reset"))
+                {
+                    IsCmdValid = true;
+                }
+                else if (firstWord.Equals("loop"))
+                {
+                    if (commandsAfterSpliting.Length == 2)
+                    {
+                        if (!commandsAfterSpliting[1].Trim().All(char.IsDigit))
+                        {
+                            IsCmdValid = false;
+                        }
+                    }
+                    else
+                    {
+                        IsCmdValid = false;
+                    }
+                }
+                else if (firstWord.Equals("endloop"))
+                {
+                    if (commandsAfterSpliting.Length == 1)
+                    {
+                        if (!commandsAfterSpliting[0].Equals("endloop"))
+                        {
+                            IsCmdValid = false;
+                        }
+                    }
+                    else
+                    {
+                        IsCmdValid = false;
+                    }
+                }//endif
+                else if (firstWord.Equals("if"))//if radius = x then
+                {
+                    if (commandsAfterSpliting.Length == 5)
+                    {
+                        if (variables.Contains(commandsAfterSpliting[1].ToLower()))
+                        {
+                            if (commandsAfterSpliting[2].Equals("="))
+                            {
+                                if (commandsAfterSpliting[3].Trim().All(char.IsDigit))
+                                {
+                                    if (!commandsAfterSpliting[4].ToLower().Equals("then"))
+                                    {
+                                        IsCmdValid = false;
+                                    }
+                                }
+                                else { IsCmdValid = false; }
+
+                            }
+                            else { IsCmdValid = false; }
+                        }
+                        else { IsCmdValid = false; }
+
+                    }
+                    else { IsCmdValid = false; }
+
+                }
+                else if (firstWord.Equals("endif"))
                 {
                     if (commandsAfterSpliting.Length != 1)
                     {
@@ -134,6 +200,17 @@ namespace GPL_Application_2020
                     }
                 }
             }
+
+           
+               
+                else if (firstWord.Equals("run"))
+                {
+                    if (commandsAfterSpliting.Length != 1)
+                    {
+                        IsCmdValid = false;
+                    }
+                }
+            
             else if (firstWordIsShape)
             {
                 if (firstWord.ToLower().Equals("circle"))
@@ -210,6 +287,76 @@ namespace GPL_Application_2020
             if (!IsCmdValid) { IsSomethingInvalid = true; }
 
         }
+
+
+
+
+        public void CheckCmdLoopAndIfValidation()
+        {
+            int numberOfLines = textBoxCmd.Lines.Length;
+            for (int i = 0; i < numberOfLines; i++)
+            {
+                String singleLineCmd = textBoxCmd.Lines[i];
+                singleLineCmd = singleLineCmd.Trim();
+                if (!singleLineCmd.Equals(""))
+                {
+                    DoesCmdHasLoop = Regex.IsMatch(singleLineCmd.ToLower(), "loop");
+                    if (DoesCmdHasLoop)
+                    {
+                        LoopLineNo = (i + 1);
+                    }
+                    DoesCmdHasEndLoop = singleLineCmd.ToLower().Contains("endloop");
+                    if (DoesCmdHasEndLoop)
+                    {
+                        EndLoopLineNo = (i + 1);
+                    }
+                    DoesCmdHasIf = Regex.IsMatch(singleLineCmd.ToLower(), "if");
+                    if (DoesCmdHasIf)
+                    {
+                        IfLineNo = (i + 1);
+                    }
+                    DoesCmdHasEndif = singleLineCmd.ToLower().Contains("endif");
+                    if (DoesCmdHasEndif)
+                    {
+                        EndIfLineNo = (i + 1);
+                    }
+                }
+            }
+            if (DoesCmdHasLoop)
+            {
+                if (DoesCmdHasEndLoop)
+                {
+                    if (LoopLineNo > EndLoopLineNo)
+                    {
+                        IsCmdValid = false;
+                        MessageBox.Show("'ENDLOOP' must be after loop start: Loop starts at" + LoopLineNo + " Loop ends at: " + EndLoopLineNo);
+                    }
+                }
+                else
+                {
+                    IsCmdValid = false;
+                    MessageBox.Show("Loop Not Ended with 'ENDLOOP'");
+                }
+            }
+            if (DoesCmdHasIf)
+            {
+                if (DoesCmdHasEndif)
+                {
+                    if (EndIfLineNo < IfLineNo)
+                    {
+                        IsCmdValid = false;
+                        MessageBox.Show("'ENDIF' must be after IF: If starts at" + IfLineNo + " and ends at: " + EndIfLineNo);
+                    }
+                }
+                else
+                {
+                    IsCmdValid = false;
+                    MessageBox.Show("IF Not Ended with 'ENDIF'");
+                }
+            }
+        }
+
+
     }
 }
 
