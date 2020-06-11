@@ -357,6 +357,53 @@ namespace GPL_Application_2020
         }
 
 
+
+
+        public void checkIfVariableDefined(string variable)
+        {
+            Boolean isvariablefound = false;
+            if (textBoxCmd.Lines.Length > 1)
+            {
+                if (lineNumber > 0)
+                {
+                    for (int i = 0; i < lineNumber; i++)
+                    {
+                        String oneLineCommand = textBoxCmd.Lines[i];
+                        oneLineCommand = oneLineCommand.Trim();
+                        if (!oneLineCommand.Equals(""))
+                        {
+                            Boolean isVariableDefined = oneLineCommand.ToLower().Contains(variable.ToLower());
+                            if (isVariableDefined)
+                            {
+                                isvariablefound = true;
+                            }
+                        }
+
+                    }
+                    if (!isvariablefound)
+                    {
+                        MessageBox.Show("Variable is not defined");
+                        IsCmdValid = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Variable is not defined");
+                    IsCmdValid = false;
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Variable is not defined");
+                IsCmdValid = false;
+            }
+        }
+
+
+
+
+
     }
 }
 
