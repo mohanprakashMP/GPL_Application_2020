@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace GPL_Application_2020
 {
-   public class CommandValidations
+   public class CommandValidations 
     {
 
         private Boolean isCmdValid = true;
@@ -24,12 +24,46 @@ namespace GPL_Application_2020
         public bool IsSomethingInvalid { get => isSomethingInvalid; set => isSomethingInvalid = value; }
 
         private int LineNumber = 0;
+
+        private Boolean doesCmdHasLoop = false;
+
+        private Boolean doesCmdHasEndLoop = false;
+
+        private Boolean doesCmdHasIf = false;
+
+        private Boolean doesCmdHasEndif = false;
+
+        private int endIfLineNo = 0;
+        private int loopLineNo;
+        private int endLoopLineNo;
+        private int ifLineNo;
+
+        public int lineNumber { get => lineNumber; set => lineNumber = value; }
+
+
+        public bool DoesCmdHasLoop { get => doesCmdHasLoop; set => doesCmdHasLoop = value; }
+
+        public bool DoesCmdHasEndLoop { get => doesCmdHasEndLoop; set => doesCmdHasEndLoop = value; }
+
+        public bool DoesCmdHasIf { get => doesCmdHasIf; set => doesCmdHasIf = value; }
+        public bool DoesCmdHasEndif { get => doesCmdHasEndif; set => doesCmdHasEndif = value; }
+
+        public int LoopLineNo { get => loopLineNo; set => loopLineNo = value; }
+
+        public int EndLoopLineNo { get => endLoopLineNo; set => endLoopLineNo = value; }
+
+        public int IfLineNo { get => ifLineNo; set => ifLineNo = value; }
+        public int EndIfLineNo { get => endIfLineNo; set => endIfLineNo = value; }
+
+        TextBox textBoxCmd;
+
+
         public CommandValidations(TextBox textBoxCmd)
         {
             int numberOfCmdLines = textBoxCmd.Lines.Length;
             if (numberOfCmdLines == 0) { IsCmdValid = false; }
             else
-            {
+            {             
                 for (int i = 0; i < numberOfCmdLines; i++)
                 {
                     String singleLineCmd = textBoxCmd.Lines[i];

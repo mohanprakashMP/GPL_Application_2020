@@ -15,7 +15,7 @@ namespace UnitTestProject1
         {
             Triangle T = new Triangle();
             T.GetValue(1, 2, 0, 3);
-            bool exceptedResult = false;
+            bool exceptedResult =false;
             bool actualResult =T.checkTriangleValidity();
             Assert.AreEqual(exceptedResult, actualResult);
         }
