@@ -93,10 +93,10 @@ namespace GPL_Application_2020
             {
                 try
                 {
-                    string comm = textBox1.Text;
+                   
                     Command c = new Command();
-                    c.Commandline(comm, g);
-                    c.Shapecommand(comm, g);
+                    c.Commandline(textBox1,g,panel1);
+                    
                 }
                 catch (Exception exc)
                 {

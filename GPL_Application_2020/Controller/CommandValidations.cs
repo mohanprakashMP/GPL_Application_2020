@@ -12,9 +12,11 @@ namespace GPL_Application_2020
     {
 
         private Boolean isCmdValid = true;
+
         public bool IsCmdValid { get => isCmdValid; set => isCmdValid = value; }
 
         private Boolean isSyntaxValid = true;
+
         public bool IsSyntaxValid { get => isSyntaxValid; set => isSyntaxValid = value; }
         private Boolean isParameterValid = true;
 
@@ -46,6 +48,8 @@ namespace GPL_Application_2020
         public bool DoesCmdHasEndLoop { get => doesCmdHasEndLoop; set => doesCmdHasEndLoop = value; }
 
         public bool DoesCmdHasIf { get => doesCmdHasIf; set => doesCmdHasIf = value; }
+
+
         public bool DoesCmdHasEndif { get => doesCmdHasEndif; set => doesCmdHasEndif = value; }
 
         public int LoopLineNo { get => loopLineNo; set => loopLineNo = value; }
@@ -53,6 +57,8 @@ namespace GPL_Application_2020
         public int EndLoopLineNo { get => endLoopLineNo; set => endLoopLineNo = value; }
 
         public int IfLineNo { get => ifLineNo; set => ifLineNo = value; }
+
+
         public int EndIfLineNo { get => endIfLineNo; set => endIfLineNo = value; }
 
         TextBox textBoxCmd;
