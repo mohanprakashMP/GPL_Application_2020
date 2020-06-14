@@ -66,6 +66,7 @@ namespace GPL_Application_2020
 
         public CommandValidations(TextBox textBoxCmd)
         {
+            this.textBoxCmd = textBoxCmd;
             int numberOfCmdLines = textBoxCmd.Lines.Length;
             if (numberOfCmdLines == 0) { IsCmdValid = false; }
             else
@@ -83,11 +84,7 @@ namespace GPL_Application_2020
                             if (!IsParameterValid) { MessageBox.Show("Paramter errors at: " + LineNumber); }
                             else if (!IsSyntaxValid) { MessageBox.Show("Syntax errors at: " + LineNumber); }
                             else { MessageBox.Show("Validation error at: " + LineNumber); }
-                            IsSomethingInvalid = true;
-                        }
-                        else
-                        {
-
+                            isCmdValid = true;
                         }
                     }
 
@@ -226,7 +223,10 @@ namespace GPL_Application_2020
                         if (commandsAfterSpliting[1].Trim().All(char.IsDigit)) { }
                         else if (commandsAfterSpliting[1].Trim().All(char.IsLetter))
                         {
-                            if (variables.Contains(commandsAfterSpliting[1].ToLower())) { }
+                            if (variables.Contains(commandsAfterSpliting[1].ToLower()))
+                            {
+                                checkIfVariableDefined(commandsAfterSpliting[1]);
+                            }
                             else { IsCmdValid = false; IsParameterValid = false; }
                         }
                         else { IsCmdValid = false; IsParameterValid = false; }
@@ -243,7 +243,10 @@ namespace GPL_Application_2020
                         for (int i = 0; i < parms.Length; i++)
                         {
                             parms[i] = parms[i].Trim();
-                            if (parms[i].All(char.IsDigit)) { }
+                            if (parms[i].All(char.IsDigit)) 
+                            {
+                                checkIfVariableDefined(parms[i]);
+                            }
                             else if (parms[i].All(char.IsLetter))
                             {
                                 if (variables.Contains(parms[i].ToLower())) { }
@@ -268,7 +271,10 @@ namespace GPL_Application_2020
                             if (parms[i].All(char.IsDigit)) { }
                             else if (parms[i].All(char.IsLetter))
                             {
-                                if (variables.Contains(parms[i].ToLower())) { }
+                                if (variables.Contains(parms[i].ToLower())) 
+                                {
+                                    checkIfVariableDefined(parms[i]);
+                                }
                                 else { IsCmdValid = false; IsParameterValid = false; }
                             }
                             else { IsCmdValid = false; IsParameterValid = false; }
@@ -293,49 +299,68 @@ namespace GPL_Application_2020
             if (!IsCmdValid) { IsSomethingInvalid = true; }
 
         }
-
-
-
-
+        /// <summary>
+        /// Check the loop and if command validation. 
+        /// </summary>
         public void CheckCmdLoopAndIfValidation()
         {
             int numberOfLines = textBoxCmd.Lines.Length;
             for (int i = 0; i < numberOfLines; i++)
             {
-                String singleLineCmd = textBoxCmd.Lines[i];
-                singleLineCmd = singleLineCmd.Trim();
-                if (!singleLineCmd.Equals(""))
+                String oneLineCommand = textBoxCmd.Lines[i];
+                oneLineCommand = oneLineCommand.Trim();
+                if (!oneLineCommand.Equals(""))
                 {
-                    DoesCmdHasLoop = Regex.IsMatch(singleLineCmd.ToLower(), "loop");
-                    if (DoesCmdHasLoop)
+                    doesCmdHasLoop = Regex.IsMatch(oneLineCommand.ToLower(), @"\bloop\b");
+                    if (doesCmdHasLoop)
                     {
-                        LoopLineNo = (i + 1);
+                        loopLineNo = (i + 1);
                     }
-                    DoesCmdHasEndLoop = singleLineCmd.ToLower().Contains("endloop");
-                    if (DoesCmdHasEndLoop)
+                    doesCmdHasEndLoop = oneLineCommand.ToLower().Contains("endloop");
+                    if (doesCmdHasEndLoop)
                     {
-                        EndLoopLineNo = (i + 1);
+                        endLoopLineNo = (i + 1);
                     }
-                    DoesCmdHasIf = Regex.IsMatch(singleLineCmd.ToLower(), "if");
-                    if (DoesCmdHasIf)
+                    doesCmdHasIf = Regex.IsMatch(oneLineCommand.ToLower(), @"\bif\b");
+                    if (doesCmdHasIf)
                     {
-                        IfLineNo = (i + 1);
+                        ifLineNo = (i + 1);
                     }
-                    DoesCmdHasEndif = singleLineCmd.ToLower().Contains("endif");
-                    if (DoesCmdHasEndif)
+                    doesCmdHasEndif = oneLineCommand.ToLower().Contains("endif");
+                    if (doesCmdHasEndif)
                     {
-                        EndIfLineNo = (i + 1);
+                        endIfLineNo = (i + 1);
                     }
                 }
             }
-            if (DoesCmdHasLoop)
+            if (loopLineNo > 0)
             {
-                if (DoesCmdHasEndLoop)
+                doesCmdHasLoop = true;
+            }
+            if (endLoopLineNo > 0)
+            {
+                doesCmdHasLoop = true;
+            }
+            if (ifLineNo > 0)
+            {
+                doesCmdHasIf = true;
+            }
+            if (endIfLineNo > 0)
+            {
+                doesCmdHasEndif = true;
+            }
+            if (doesCmdHasLoop)
+            {
+                if (doesCmdHasEndLoop)
                 {
-                    if (LoopLineNo > EndLoopLineNo)
+                    if (loopLineNo < endLoopLineNo)
+                    {
+
+                    }
+                    else
                     {
                         IsCmdValid = false;
-                        MessageBox.Show("'ENDLOOP' must be after loop start: Loop starts at" + LoopLineNo + " Loop ends at: " + EndLoopLineNo);
+                        MessageBox.Show("'ENDLOOP' must be after loop start");
                     }
                 }
                 else
@@ -344,14 +369,18 @@ namespace GPL_Application_2020
                     MessageBox.Show("Loop Not Ended with 'ENDLOOP'");
                 }
             }
-            if (DoesCmdHasIf)
+            if (doesCmdHasIf)
             {
-                if (DoesCmdHasEndif)
+                if (doesCmdHasIf)
                 {
-                    if (EndIfLineNo < IfLineNo)
+                    if (ifLineNo < endIfLineNo)
+                    {
+
+                    }
+                    else
                     {
                         IsCmdValid = false;
-                        MessageBox.Show("'ENDIF' must be after IF: If starts at" + IfLineNo + " and ends at: " + EndIfLineNo);
+                        MessageBox.Show("'ENDIF' must be after IF");
                     }
                 }
                 else
@@ -361,9 +390,6 @@ namespace GPL_Application_2020
                 }
             }
         }
-
-
-
 
         public void checkIfVariableDefined(string variable)
         {
@@ -405,11 +431,6 @@ namespace GPL_Application_2020
                 IsCmdValid = false;
             }
         }
-
-
-
-
-
     }
 }
 

@@ -86,43 +86,42 @@ namespace GPL_Application_2020
         private void button1_Click(object sender, EventArgs e)
         {
 
-            if (textBox1.Text != null && !textBox1.Text.Equals(""))
+            if (textBox1.Text != null && !textBox1.Equals(""))
             {
                 CommandValidations cmdval = new CommandValidations(textBox1);
-            if (!cmdval.IsSomethingInvalid)
-            {
-                try
+                if (!cmdval.IsSomethingInvalid)
                 {
-                   
-                    Command c = new Command();
-                    c.Commandline(textBox1,g,panel1);
-                    
-                }
-                catch (Exception exc)
-                {
-                    textBox2.Text += "\r\n" + exc.ToString();
-                }
-            }
-            else if (!cmdval.IsSyntaxValid)
-            {
-                textBox2.Text += "\r\nCommand Syntax Error.";
-            }
-            else if (!cmdval.IsParameterValid)
-            {
-                textBox2.Text += "\r\nParamter Error.";
-            }
-            else
-            {
-                textBox2.Text += "\r\nSomething went wrong, try again.";
+                    try
+                    {
 
+                        Command c = new Command();
+                        c.loadCommand(textBox1, g, panel1);
+
+                    }
+                    catch (Exception exc)
+                    {
+                        textBox2.Text += "\r\n" + exc.ToString();
+                    }
+                }
+                else if (!cmdval.IsSyntaxValid)
+                {
+                    textBox2.Text += "\r\nCommand Syntax Error.";
+                }
+                else if (!cmdval.IsParameterValid)
+                {
+                    textBox2.Text += "\r\nParamter Error.";
+                }
+                else
+                {
+                    textBox2.Text += "\r\nSomething went wrong, try again.";
+
+                }
             }
-        }
             else
             {
                 textBox2.Text += ("CommandField Must not be Empty");
             }
-}
-
+        }
         private void button3_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
@@ -142,6 +141,28 @@ namespace GPL_Application_2020
         {
             HelpSection hs = new HelpSection();
             hs.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Pen redPen = new Pen(Color.Red, 3);
+            Pen greenPen = new Pen(Color.Green, 3);
+
+            // Create points that define curve.
+            Point point1 = new Point(50, 50);
+            Point point2 = new Point(100, 25);
+            Point point3 = new Point(200, 5);
+            Point point4 = new Point(250, 50);
+            Point point5 = new Point(300, 100);
+            Point point6 = new Point(350, 200);
+            Point point7 = new Point(250, 250);
+            Point[] curvePoints = { point1, point2, point3, point4, point5, point6, point7 };
+
+            // Draw lines between original points to screen.
+            g   .DrawLines(redPen, curvePoints);
+
+            // Draw curve to screen.
+            g.DrawCurve(greenPen, curvePoints);
         }
     }
 }
